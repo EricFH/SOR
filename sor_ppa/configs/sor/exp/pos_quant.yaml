@@ -1,0 +1,31 @@
+_BASE_: "../Base-CenterMask-VoVNet-sor.yaml"
+MODEL:
+  WEIGHTS: "pretrained/centermask2-V-39-eSE-FPN-ms-3x.pth"
+  VOVNET:
+    CONV_BODY : "V-39-eSE"
+  DET_WEIGHTS: 1.0
+
+
+  SOR:
+    NAME: "SelfAttentionWithOtherPosQuant"
+    CONV_DIM: 256
+    NUM_CONV: 4
+    DENSE_DIM: 1024
+    OBJ_DIM: 1024
+    TRANSFORMER:
+      D_MODEL: 1024
+      N_HEAD: 4
+      LAYERS: 4
+      USE_POS: False
+    QUANT_NUM: 4
+
+
+
+
+SOLVER:
+  BASE_LR: 1e-4
+  STEPS: (42000, 50000)
+  MAX_ITER: 54000
+OUTPUT_DIR: "output/sor/exp/quant_xy/"
+TEST:
+  EVAL_PERIOD: 0

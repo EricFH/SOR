@@ -1,0 +1,28 @@
+_BASE_: "Base-CenterMask-VoVNet-sor.yaml"
+MODEL:
+  WEIGHTS: "pretrained/centermask2-V-39-eSE-FPN-ms-3x.pth"
+  VOVNET:
+    CONV_BODY : "V-39-eSE"
+  DET_WEIGHTS: 1.0
+
+
+  SOR:
+    NAME: "SinglePredictor"
+    CONV_DIM: 128
+    NUM_CONV: 2
+    DENSE_DIM: 512
+    OBJ_DIM: 256
+    # TRANSFORMER:
+    #   D_MODEL: 256
+    #   N_HEAD: 2
+
+
+
+
+SOLVER:
+  BASE_LR: 1e-2
+  STEPS: (42000, 50000)
+  MAX_ITER: 54000
+OUTPUT_DIR: "output/sor/tiny_baseline.yaml/"
+TEST:
+  EVAL_PERIOD: 10000

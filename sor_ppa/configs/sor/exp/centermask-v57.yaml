@@ -1,0 +1,30 @@
+_BASE_: "../Base-CenterMask-VoVNet-sor.yaml"
+MODEL:
+  WEIGHTS: "pretrained/centermask2-V-57-eSE-FPN-ms-3x.pth"
+  VOVNET:
+    CONV_BODY : "V-57-eSE"
+  DET_WEIGHTS: 1.0
+
+
+  SOR:
+    NAME: "SelfAttentionWithPosConvCat"
+    CONV_DIM: 256
+    NUM_CONV: 4
+    DENSE_DIM: 1024
+    OBJ_DIM: 1024
+    TRANSFORMER:
+      D_MODEL: 1024
+      N_HEAD: 4
+      LAYERS: 4
+      USE_POS: True
+
+
+
+
+SOLVER:
+  BASE_LR: 1e-4
+  STEPS: (4000, 5000)
+  MAX_ITER: 8000
+OUTPUT_DIR: "output/exp/centermask57"
+TEST:
+  EVAL_PERIOD: 1000
